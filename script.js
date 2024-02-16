@@ -2,15 +2,29 @@
 // Function for score--0
 // Function for score--1
 
+// Selecting elements
+const score0El = document.querySelector('#score--0');
+const score1El = document.getElementById('score--1');
+const diceEL = document.querySelector('.dice');
+const btnNew = document.querySelector('.btn--new');
+const btnRoll = document.querySelector('.btn--roll');
+const btnHold = document.querySelector('.btn--hold');
+
 // Change player scores to 0
-document.querySelector('#score--0').textContent = 0;
-document.querySelector('#score--1').textContent = 0;
+score0El.textContent = 0;
+score1El.textContent = 0;
+
+// Hide dice
+diceEL.classList.add('hidden');
 
 // Roll Dice
-document.querySelector('.btn--roll').addEventListener('click', function () {
+btnRoll.addEventListener('click', function () {
   // make a new random dice number
   let diceRoll = Math.trunc(Math.random() * 6 + 1);
   console.log(diceRoll);
+
+  // display dice roll
+  diceEL.classList.remove('hidden');
 
   // add the score to current
   let currentScore = diceRoll + currentScore; //Fix
