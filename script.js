@@ -5,38 +5,43 @@
 // Selecting elements
 const score0El = document.querySelector('#score--0');
 const score1El = document.getElementById('score--1');
+const current0El = document.getElementById('current--0');
+const current1El = document.getElementById('current--1');
 const diceEL = document.querySelector('.dice');
 const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-// Change player scores to 0
+// Starting conditions
 score0El.textContent = 0;
 score1El.textContent = 0;
+
+const score = [0, 0];
+let currentScore = 0;
+let activePlayer = 0;
 
 // Hide dice
 diceEL.classList.add('hidden');
 
 // Roll Dice
 btnRoll.addEventListener('click', function () {
-  // make a new random dice number
-  let diceRoll = Math.trunc(Math.random() * 6 + 1);
-  console.log(diceRoll);
+  // 1. Generate random dice roll
+  let dice = Math.trunc(Math.random() * 6 + 1);
+  console.log(dice);
 
-  // display dice roll
+  // 2. Display dice
   diceEL.classList.remove('hidden');
+  // update the picture
+  diceEL.src = `dice-${dice}.png`;
 
-  // add the score to current
-  let currentScore = diceRoll + currentScore; //Fix
-  console.log(currentScore);
-
-  // reset current to 0 if rolls 1
-  if (diceRoll === 1) {
-    currentScore = 0;
+  // 3. Check for rolled 1: if true, switch to next player
+  if (dice !== 1) {
+    // Add dice to current score
+    currentScore += dice;
+    current0El.textContent = currentScore; // CHANGE LATER
+  } else {
+    // Switch to next plyer
   }
-
-  // update the picture Fix - Fix
-  // document.querySelector('.dice'). - change img src to equal diceRoll
 });
 
 // Hold Score
