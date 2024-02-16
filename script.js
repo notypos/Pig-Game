@@ -19,9 +19,17 @@ const btnHold = document.querySelector('.btn--hold');
 score0El.textContent = 0;
 score1El.textContent = 0;
 
-const score = [0, 0];
+const scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
+
+const switchPlayer = function () {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  currentScore = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0; // Switch has to go after you change the text
+  player0El.classList.toggle('player--active'); // css background with a transparency
+  player1El.classList.toggle('player--active');
+};
 
 // Hide dice
 diceEL.classList.add('hidden');
@@ -47,16 +55,31 @@ btnRoll.addEventListener('click', function () {
     // current0El.textContent = currentScore; only changes player0 score
   } else {
     // Switch to next plyer
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
-    currentScore = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0; // Switch has to go after you change the text
-    player0El.classList.toggle('player--active'); // css background with a transparency
-    player1El.classList.toggle('player--active');
+    switchPlayer();
   }
 });
 
 // Hold Score
-document.querySelector('.btn--hold').addEventListener('click', function () {
-  // Hold the score
-  document.querySelector('#score--1').textContent = totalScore + currentScore;
+btnHold.addEventListener('click', function () {
+  // 1. Add current score to active player's score
+  scores[activePlayer] += currentScore;
+  document.getElementById(`score--${activePlayer}`).textContent =
+    scores[activePlayer];
+
+  // 2. Check if player's score is >= 100
+  if (scores[activePlayer] >= 10) {
+    // Finish the game
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
+  } else {
+    // Switch to the next player
+    switchPlayer();
+  }
+
+  // Switch to the next player
+  switchPlayer();
 });
